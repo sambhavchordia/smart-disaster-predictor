@@ -7,8 +7,8 @@ import boto3
 st.set_page_config(page_title="🌪️ Smart Disaster Predictor", layout="centered")
 
 # ✅ AWS Credentials (For production, use env variables instead of hardcoding)
-AWS_ACCESS_KEY_ID = "AKIA2ZIOM3IFDXTBQZ6S"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = "AKIA2ZIOM3IFBBPFRCHT"
+AWS_SECRET_ACCESS_KEY = "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"
 
 # ✅ Load ML models
 flood_rf = joblib.load("models/flood_rf_model.pkl")
@@ -114,4 +114,3 @@ with tab2:
                     st.warning("⚠️ Please enter a valid phone number to receive alerts.")
             else:
                 st.success("✅ Low Risk of Earthquake. Stay safe!")
-
