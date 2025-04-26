@@ -7,8 +7,8 @@ import boto3
 st.set_page_config(page_title="🌪️ Smart Disaster Predictor", layout="centered")
 
 # ✅ AWS Credentials (For production, use env variables instead of hardcoding)
-AWS_ACCESS_KEY_ID = ""
-AWS_SECRET_ACCESS_KEY = ""
+AWS_ACCESS_KEY_ID = "AKIA2ZIOM3IFDXTBQZ6S"
+AWS_SECRET_ACCESS_KEY = "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"
 
 # ✅ Load ML models
 flood_rf = joblib.load("models/flood_rf_model.pkl")
@@ -19,7 +19,7 @@ earthquake_lr = joblib.load("models/earthquake_lr_model.pkl")
 # ✅ Set up AWS SNS client
 sns = boto3.client(
     'sns',
-    region_name='',
+    region_name='ap-south-1',
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY
 )
