@@ -7,8 +7,8 @@ import boto3
 st.set_page_config(page_title="🌪️ Smart Disaster Predictor", layout="centered")
 
 # ✅ AWS Credentials (For production, use env variables instead of hardcoding)
-AWS_ACCESS_KEY_ID = "AKIA2ZIOM3IFBBPFRCHT"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = ""
+AWS_SECRET_ACCESS_KEY = ""
 
 # ✅ Load ML models
 flood_rf = joblib.load("models/flood_rf_model.pkl")
