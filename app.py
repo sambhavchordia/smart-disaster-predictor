@@ -35,9 +35,9 @@ def send_sns_alert(message, phone_number):
 # Function to connect to MySQL RDS database
 def connect_to_db():
     db_connection = mysql.connector.connect(
-        host="<rds-endpoint>",  # e.g., "smart-disaster-db.cjpd123xyz.us-west-2.rds.amazonaws.com"
-        user="<db-username>",  # e.g., "admin"
-        password="<db-password>",  # Use the password from RDS setup
+        host="smart-disaster-db.c90c2k8see01.ap-south-1.rds.amazonaws.com",  # e.g., "smart-disaster-db.cjpd123xyz.us-west-2.rds.amazonaws.com"
+        user="admin",  # e.g., "admin"
+        password="Sambhav27",  # Use the password from RDS setup
         database="disaster_db"
     )
     return db_connection
