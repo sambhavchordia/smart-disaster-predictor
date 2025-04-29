@@ -6,10 +6,10 @@ import boto3
 from dotenv import load_dotenv
 import os
 
-# Load environment variables (optional, if you store AWS keys in .env)
+# Load environment variables from .env file
 load_dotenv()
 
-# Load trained models
+# Load trained models (make sure these models are available in the "models/" directory)
 flood_rf = joblib.load("models/flood_rf_model.pkl")
 flood_lr = joblib.load("models/flood_lr_model.pkl")
 earthquake_rf = joblib.load("models/earthquake_rf_model.pkl")
@@ -18,12 +18,12 @@ earthquake_lr = joblib.load("models/earthquake_lr_model.pkl")
 # AWS SNS client setup
 sns = boto3.client(
     'sns',
-    region_name='ap-south-1',
-    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),         # or hardcode for testing
+    region_name=os.getenv("AWS_DEFAULT_REGION"),
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
 )
 
-# Function to send alert
+# Function to send alert via AWS SNS
 def send_sns_alert(message, phone_number):
     response = sns.publish(
         PhoneNumber=phone_number,
@@ -41,7 +41,7 @@ def connect_to_db():
     )
     return db_connection
 
-# Function to save input data into MySQL database
+# Function to save user input data into MySQL database
 def save_data_to_db(data):
     db_connection = connect_to_db()
     cursor = db_connection.cursor()
@@ -86,6 +86,7 @@ with tab1:
 
     if st.button("Predict Flood Risk"):
         input_data = np.array([[rainfall, river_level, soil_moisture, temperature]])
+        input_data = pd.DataFrame(input_data, columns=["rainfall_mm", "river_level_m", "soil_moisture", "temperature_c"])
         model = flood_rf if model_choice_flood == "Random Forest" else flood_lr
         result = model.predict(input_data)
 
@@ -126,6 +127,7 @@ with tab2:
 
     if st.button("Predict Earthquake Risk"):
         input_data = np.array([[magnitude, depth, distance, population]])
+        input_data = pd.DataFrame(input_data, columns=["magnitude", "depth", "distance", "population"])
         model = earthquake_rf if model_choice_eq == "Random Forest" else earthquake_lr
         result = model.predict(input_data)
 
