@@ -5,12 +5,12 @@ import joblib
 import boto3
 from dotenv import load_dotenv
 import os
-import pandas as pd
+import pandas as pd  # <-- Ensure pandas is imported
 
-# Load environment variables from .env file
+# Load environment variables (optional, if you store AWS keys in .env)
 load_dotenv()
 
-# Load trained models (make sure these models are available in the "models/" directory)
+# Load trained models
 flood_rf = joblib.load("models/flood_rf_model.pkl")
 flood_lr = joblib.load("models/flood_lr_model.pkl")
 earthquake_rf = joblib.load("models/earthquake_rf_model.pkl")
@@ -42,7 +42,7 @@ def connect_to_db():
     )
     return db_connection
 
-# Function to save user input data into MySQL database
+# Function to save input data into MySQL database
 def save_data_to_db(data):
     db_connection = connect_to_db()
     cursor = db_connection.cursor()
@@ -87,7 +87,9 @@ with tab1:
 
     if st.button("Predict Flood Risk"):
         input_data = np.array([[rainfall, river_level, soil_moisture, temperature]])
-        input_data = pd.DataFrame(input_data, columns=["rainfall_mm", "river_level_m", "soil_moisture", "temperature_c"])
+        
+        # Update column names to match those used during model training
+        input_data = pd.DataFrame(input_data, columns=["Rainfall_mm", "River_Level_m", "Soil_Moisture", "Temperature_C"])
         model = flood_rf if model_choice_flood == "Random Forest" else flood_lr
         result = model.predict(input_data)
 
@@ -128,7 +130,9 @@ with tab2:
 
     if st.button("Predict Earthquake Risk"):
         input_data = np.array([[magnitude, depth, distance, population]])
-        input_data = pd.DataFrame(input_data, columns=["magnitude", "depth", "distance", "population"])
+        
+        # Update column names to match those used during model training
+        input_data = pd.DataFrame(input_data, columns=["Magnitude", "Depth_km", "Distance_to_City_km", "Population_Density"])
         model = earthquake_rf if model_choice_eq == "Random Forest" else earthquake_lr
         result = model.predict(input_data)
 
