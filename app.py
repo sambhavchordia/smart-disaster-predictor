@@ -5,6 +5,7 @@ import joblib
 import boto3
 from dotenv import load_dotenv
 import os
+import pandas as pd
 
 # Load environment variables from .env file
 load_dotenv()
